@@ -258,7 +258,10 @@ app.use((err,req,res,next)=>{
 
 });
 
-app.listen(8080,()=>{
-    console.log('LISTENING AT PORT 8080');
+const port = process.env.PORT || 8080
+// process.env.PORT is given automatically by heroku
+
+app.listen(port,()=>{
+    console.log(`Listening at port ${port}`);
 });  
 
