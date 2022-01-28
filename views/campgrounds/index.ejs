@@ -1,0 +1,65 @@
+<!-- using ejs-mate to add boilerplate to all the files -->
+
+<% layout('layouts/boilerplate.ejs') %>
+
+<style>
+    body {
+        background-image: url('/pictures/BG.jpg');
+        background-size: cover;
+        background-position: center;
+    }
+    h1{
+        color: rgb(0, 217, 255);
+        text-align: center;
+        margin:10px;
+    }
+
+</style>
+
+<div id="cluster-map" crossorigin></div>
+
+    <h1 class="mb-3 mt-5">Campgrounds</h1>
+
+    <% for(let campground of campgrounds) {%>
+
+        <div class="card mb-3 shadow">
+            <div class="row">
+                <div class="col-md-4">
+                    <% if(campground.images.length){ %> 
+                    <img class="img-fluid" src="<%= campground.images[0].url %> " crossorigin>
+                    <% } else{%>
+                        <img class="img-fluid" src="/pictures/noImage.jpg">
+                        <% } %> 
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <%=campground.title %>
+                        </h5>
+                        <p class="card-text">
+                            <%=campground.description %>
+                        </p>
+                        <p class="card-text">
+                            <small class="text-muted">
+                                <%=campground.location %>
+                            </small>
+                        </p>
+                        <a href="/campgrounds/<%=campground._id %> " class="btn btn-primary">View <%=campground.title %>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <% } %>
+        <script>
+            const mapToken = '<%-process.env.MAPBOX_TOKEN%>'
+            // including our campgrounds in map
+            const campgrounds ={ features : <%-JSON.stringify(campgrounds)%>}
+        </script>
+
+        <script src="/javascripts/clusterMap.js">
+            // script for the js file for cluster maps
+        </script> 
